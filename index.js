@@ -23,7 +23,7 @@ const sequelize = new Sequelize(DATABASE_NAME,USERNAME,PASSWORD,{
 
 //Define User Model
 const User = sequelize.define('user',{
-    email: {
+    name: {
         type: Sequelize.STRING
     },
     password: {
@@ -54,6 +54,17 @@ const getUser = async obj => {
 //First basic route
 app.get('/', (req,res) => {
     res.send({msg: 'Server is connected'}).status(200);
+});
+
+app.get('/users',(req,res) => {
+    getAllUsers().then(user => res.json(user));
+});
+
+app.post('/createUser',(req,res,next) => {
+    const { name, password} = req.body;
+    createUser({ name, password}).then(user => {
+        res.json({user,msg: 'account created'})
+    });
 });
 
 //Check database connection
