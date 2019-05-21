@@ -1,0 +1,90 @@
+{
+	"variables": [],
+	"info": {
+		"name": "AUTH (Advanced)",
+		"_postman_id": "c2633fa5-5c20-0578-5aeb-41df8a0522c0",
+		"description": "It's API for testing user auth using jwt and passport",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "localhost:3000/",
+			"request": {
+				"url": "localhost:3000/",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:3000/createUser",
+			"request": {
+				"url": "localhost:3000/createUser",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"new user\",\n\t\"password\": \"123456\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:3000/users",
+			"request": {
+				"url": "localhost:3000/users",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:3000/login",
+			"request": {
+				"url": "localhost:3000/login",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"jay\",\n\t\"password\": \"123456789\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:3000/protected",
+			"request": {
+				"url": "localhost:3000/protected",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNTU4NDQwNzU4fQ.BgeK4OBZ0Ot9gIjVX_v8LTlJv0A2Vmm3cdDiPH0vUDI",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}
