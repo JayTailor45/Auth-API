@@ -36,11 +36,11 @@ const PASSWORD      = '';
 const DB_PORT       = 3333;
 
 
-//Initial configurations
+// Initial configurations
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(passport.initialize());
-//Initilize instance of Sequelize
+// Initilize instance of Sequelize
 const sequelize = new Sequelize(DATABASE_NAME,USERNAME,PASSWORD,{
     host    : HOSTNAME, 
     dialect : 'mysql',
@@ -99,7 +99,7 @@ const getUser = async obj => {
     })
 };
 
-//First basic route
+// First basic route
 app.get('/', (req,res) => {
     res.send({msg: 'Server is connected'}).status(200);
 });
@@ -115,7 +115,7 @@ app.post('/createUser',(req,res,next) => {
     });
 });
 
-//Check database connection
+// Check database connection
 sequelize
     .authenticate()
     .then(()=> {
@@ -125,7 +125,7 @@ sequelize
         console.log('Database connection fail.' + err)
     });
 
-//Fire server to listen on given port
+// Fire server to listen on given port
 app.listen(PORT, () => {
     console.log(`Server is running on ${PORT}`);
 });
