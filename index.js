@@ -39,6 +39,18 @@ User.sync()
         console.log(`Error creating table : ${err}`)
     });
 
+const createUser = async ({ name, password }) => {
+    return await User.create({ name, password });
+};
+const getAllUsers = async () => {
+    return await User.findAll();
+};
+const getUser = async obj => {
+    return await User.findOne({
+        where: obj
+    })
+};
+
 //First basic route
 app.get('/', (req,res) => {
     res.send({msg: 'Server is connected'}).status(200);
