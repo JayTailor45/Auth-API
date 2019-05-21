@@ -2,6 +2,30 @@ const express = require('express');
 const Sequelize = require('sequelize');
 const app = express();
 
+// Import Passport and Passport-JWT modules
+const passport    = require('passport');
+const passportJWT = require('passport-jwt');
+
+let ExtractJwt    = passportJWT.ExtractJwt;
+let JwtStrategy   = passportJWT.Strategy;
+let JwtOptions    = {}
+
+JwtOptions.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
+JwtOptions.secretOrKey    = 'awesome'
+
+// Create strategy
+let strategy = new JwtStrategy(JwtOptions,(jwt_payload, next) => {
+    console.log('payload recived', jwt_payload);
+    let user = getUser({ id: jwt_payload.id });
+    if (user) {
+        next(null, user);
+    } else {
+        next(null, false);
+    }
+});
+
+passport.use(strategy);
+
 const PORT          = 3000;
 const DATABASE_NAME = 'user_db';
 const HOSTNAME      = 'localhost';
@@ -13,7 +37,7 @@ const DB_PORT       = 3333;
 //Initial configurations
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
-
+app.use(passport.initialize());
 //Initilize instance of Sequelize
 const sequelize = new Sequelize(DATABASE_NAME,USERNAME,PASSWORD,{
     host    : HOSTNAME, 
