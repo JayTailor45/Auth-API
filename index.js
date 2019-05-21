@@ -21,6 +21,24 @@ const sequelize = new Sequelize(DATABASE_NAME,USERNAME,PASSWORD,{
     port    : DB_PORT
 });
 
+//Define User Model
+const User = sequelize.define('user',{
+    email: {
+        type: Sequelize.STRING
+    },
+    password: {
+        type: Sequelize.STRING
+    }
+})
+
+User.sync()
+    .then(() => {
+        console.log(`Table created`)
+    })
+    .catch((err) => {
+        console.log(`Error creating table : ${err}`)
+    });
+
 //First basic route
 app.get('/', (req,res) => {
     res.send({msg: 'Server is connected'}).status(200);
