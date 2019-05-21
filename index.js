@@ -74,6 +74,11 @@ app.post('/login',async (req,res,next) => {
     }
 });
 
+// Protected routes
+app.get('/protected', passport.authenticate('jwt',{session: false}),(req,res) => {
+    res.json({msg: 'Authenticated access. :)'})
+});
+
 User.sync()
     .then(() => {
         console.log(`Table created`)
