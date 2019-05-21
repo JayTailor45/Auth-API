@@ -6,6 +6,8 @@ const app = express();
 const passport    = require('passport');
 const passportJWT = require('passport-jwt');
 
+const jwt         = require('jsonwebtoken');
+
 let ExtractJwt    = passportJWT.ExtractJwt;
 let JwtStrategy   = passportJWT.Strategy;
 let JwtOptions    = {}
@@ -54,6 +56,23 @@ const User = sequelize.define('user',{
         type: Sequelize.STRING
     }
 })
+
+app.post('/login',async (req,res,next) => {
+    const {name, password} = req.body;
+    if(name && password){
+        let user = await getUser({name});
+        if(!user) {
+            res.status(401).json({msg: 'no such user found', user})
+        }
+        if(user.password === password){
+            let payload = {id: user.id};
+            let token = jwt.sign(payload, JwtOptions.secretOrKey);
+            res.json({msg: 'ok',token})
+        } else {
+            res.status(401).json({msg: 'password is not correct'})
+        }
+    }
+});
 
 User.sync()
     .then(() => {
